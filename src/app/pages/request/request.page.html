@@ -1,0 +1,158 @@
+<ion-header no-border no-shadow>
+  <ion-toolbar>
+    <div slot="start" style="width: 48px"></div>
+    <ion-title style="text-align: center"></ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="isAuthenticated" (click)="history()" >
+        <ion-icon slot="icon-only" name="time-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+
+  <ion-refresher *ngIf="!isLoading" slot="fixed" (ionRefresh)="doRefresh($event)" class="refresher-custom">
+    <ion-refresher-content >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="booking-list">
+    <ng-container *ngIf="!isLoading; else elseLoading">
+      <ng-container *ngIf="requestData.length > 0; else elseNoData">
+        <div class="list-data">
+          <ion-card mode="ios" *ngFor="let r of requestData">
+            <ion-card-header>
+              <ion-list lines="none">
+                <ion-item class="ion-no-padding">
+                  <ion-label>
+                    <h2 class="title" (click)="onOpenDetails(r)">#{{r.requestNo}}</h2>
+                  </ion-label>
+                  <ion-badge slot="end" style="color: #fff" color="{{
+                  r.requestStatus === 'PENDING' ? 'warning' : '' ||
+                  r.requestStatus === 'TOPAY' ? 'danger' : '' ||
+                  r.requestStatus === 'PROCESSING' ? 'primary' : '' ||
+                  r.requestStatus === 'TOCOMPLETE' ? 'success' : ''}}">{{
+                  r.requestStatus === 'PENDING' ? 'Pending' : '' ||
+                  r.requestStatus === 'TOPAY' ? 'To pay' : '' ||
+                  r.requestStatus === 'PROCESSING' ? 'Processing' : '' ||
+                  r.requestStatus === 'TOCOMPLETE' ? 'To complete' : ''}}</ion-badge>
+                </ion-item>
+              </ion-list>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label (click)="onOpenDetails(r)">
+                <h2 class="item-title"><strong>{{r?.requestType?.name}}</strong></h2>
+              </ion-label>
+            </ion-card-content>
+            <div class="action" >
+              <div style="display :flex; flex-direction: column;width: 100%;" (click)="onOpenDetails(r)">
+                <div *ngIf="r.requestStatus === 'PENDING'">
+                  <h5><strong>{{r.dateRequested| date: 'EEE, dd MMM yyyy h:mm a'}}</strong></h5>
+                </div>
+                <div *ngIf="r.requestStatus === 'TOPAY'">
+                  <h5><strong>{{r.dateAssigned| date: 'EEE, dd MMM yyyy h:mm a'}}</strong></h5>
+                </div>
+                <div *ngIf="r.requestStatus === 'PROCESSING'">
+                  <h5><strong>{{r.dateProcessStarted| date: 'EEE, dd MMM yyyy h:mm a'}}</strong></h5>
+                </div>
+                <div *ngIf="r.requestStatus === 'TOCOMPLETE'">
+                  <h5><strong>{{r.dateProcessEnd| date: 'EEE, dd MMM yyyy h:mm a'}}</strong></h5>
+                </div>
+              </div>
+              <ion-list *ngIf="r.requestStatus === 'PENDING' || r.requestStatus === 'TOPAY'" lines="none" >
+                <ion-item button class="ion-no-padding" detail="false" (click)="cancelRequest(r.requestNo)">
+                  <ion-icon name="close-outline" color="danger"></ion-icon>
+                  <ion-label><h3 style="font-size: 1.2em!important;"><ion-text color="danger">Cancel</ion-text></h3></ion-label>
+                </ion-item>
+              </ion-list>
+            </div>
+          </ion-card>
+          <ion-button style="margin: 10px 0;" *ngIf="requestData && requestData.length >= pageSize && requestData.length < total" fill="clear" size="small" expand="full" (click)="loadMore()"><h4>Load more...</h4></ion-button>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <ng-template #elseNoData >
+    <div class="list-none">
+      <ion-icon name="document-text-outline" style="font-size: 3rem!important;"></ion-icon>
+      <h1>No records yet</h1>
+    </div>
+  </ng-template>
+  <ng-template #elseLoading>
+    <ion-card mode="ios" >
+      <ion-card-header>
+        <ion-list lines="none">
+          <ion-item class="ion-no-padding">
+            <ion-label>
+              <ion-skeleton-text style="height: 25px;width: 100%" [animated]="true"></ion-skeleton-text>
+            </ion-label>
+            <ion-skeleton-text style="height: 25px;width: 20%" [animated]="true"></ion-skeleton-text>
+          </ion-item>
+        </ion-list>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label >
+          <ion-skeleton-text style="height: 30px;width: 100%" [animated]="true"></ion-skeleton-text>
+        </ion-label>
+      </ion-card-content>
+      <div class="action" >
+        <div style="display :flex; flex-direction: column;width: 100%;">
+          <ion-skeleton-text style="height: 20px;width: 100%" [animated]="true"></ion-skeleton-text>
+        </div>
+        <ion-list lines="none">
+          <ion-item button class="ion-no-padding" detail="false">
+            <ion-skeleton-text style="height: 30px;width: 100%" [animated]="true"></ion-skeleton-text>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-card>
+  </ng-template>
+
+</ion-content>
+
+<div class="sched-controls-bottom">
+  <ion-button [disabled]="isLoading" color="primary" size="large" expand="block" shape="round" (click)="isAuthenticated ? onOpenAdd() : logout()">{{isAuthenticated ? 'New Request' : 'Login to get started'}}</ion-button>
+</div>
+
+<ion-modal class="result-modal" [isOpen]="isOpenRequestResultModal">
+  <ng-template>
+    <div class="success-modal-content">
+      <ion-icon name="checkmark-circle-outline" *ngIf="requestResultModal?.type==='success'; else errorIcon" color="primary"></ion-icon>
+      <ng-template #errorIcon>
+        <ion-icon name="checkmark-circle-outline" color="danger"></ion-icon>
+      </ng-template>
+
+      <div class="title">
+        <h1>{{requestResultModal?.title}}</h1>
+      </div>
+      <div class="desc">
+        <h1>{{requestResultModal?.desc}}</h1>
+      </div>
+      <div class="action">
+        <ion-button
+          *ngIf="requestResultModal?.type==='success'; else errorAction"
+          mode="md"
+          expand="outline"
+          shape="round"
+          size="large"
+          color="primary"
+          (click)="requestResultModal.done()">
+        Done
+      </ion-button>
+      <ng-template #errorAction>
+        <ion-button
+          mode="md"
+          expand="outline"
+          shape="round"
+          size="large"
+          color="danger"
+          (click)="requestResultModal.retry()">
+        Retry
+      </ion-button>
+      </ng-template>
+
+    </div>
+    </div>
+  </ng-template>
+</ion-modal>

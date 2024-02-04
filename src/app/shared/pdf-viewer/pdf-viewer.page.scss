@@ -1,0 +1,20 @@
+ion-header::after {
+  background-image: none;
+}
+ion-title  {
+  * {
+    width: 100%;
+    text-overflow: ellipsis!important;
+    overflow: hidden!important;
+    display: block;
+  }
+}
+#mainContainer {
+  pdf-toolbar {
+    display: none!important;
+    #toolbarViewerRight {
+      display: none!important;
+    }
+
+  }
+}

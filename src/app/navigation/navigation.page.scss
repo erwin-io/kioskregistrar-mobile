@@ -1,0 +1,48 @@
+.nav-ion-tabs {
+  ion-tab-bar {
+    height: 60px!important;
+  }
+  ion-tab-button {
+    ion-label {
+        // font-size: 1rem;
+        font-weight: 600;
+    }
+    font-size: 14px;
+    ion-icon {
+      font-size: 1.5rem;
+    }
+  }
+}
+ion-tab-button {
+  --color-selected: var(--ion-color-primary-tint);
+  font-size: 14px;
+  ion-icon {
+    // font-size: 30px;
+  }
+  // &::before {
+  //   background-color: transparent;
+  //   display: block;
+  //   content: "";
+  //   margin: 0 auto;
+  //   width: 20px;
+  //   height: 2px;
+  // }
+
+  // &.tab-selected::before {
+  //   background-color: var(--ion-color-tertiary);
+  // }
+  ion-badge {
+    --background: var(--ion-color-primary-shade);
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 100%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-content: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: -2px!important;
+}
+}

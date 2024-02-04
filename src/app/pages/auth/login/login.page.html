@@ -1,0 +1,76 @@
+
+<ion-content>
+  <div class="login container">
+    <div class="form-container">
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="onFormSubmit()">
+        <fieldset [disabled]="isSubmitting">
+          <div class="form-field-group" style="margin-bottom: 20px!important;">
+            <div class="app_banner">
+              <div class="image-container">
+                <img src="../../../../assets/img/app_banner.png">
+              </div>
+            </div>
+            <span class="login-text">Log into your account</span>
+          </div>
+          <div class="form-field-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Username</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Username"
+                formControlName="userName"
+                autocapitalize="none"
+                (focus)="footer.classList.add('hidden')"
+                (blur)="footer.classList.remove('hidden')"
+                oninput="this.value = this.value.toLowerCase()"
+              />
+            </mat-form-field>
+          </div>
+          <div class="form-field-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                type="password"
+                placeholder="Password"
+                formControlName="password"
+                (focus)="footer.classList.add('hidden')"
+                (blur)="footer.classList.remove('hidden')"
+                #password
+              />
+              <mat-icon
+                class="icon-right"
+                (click)="password.type= (password.type === 'password' ? 'text' : 'password')"
+                style="cursor: pointer;"
+                matSuffix>{{ password.type === 'password' ? 'visibility' : 'visibility_off' }}</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="form-field-group" style="margin-bottom: 20px!important;">
+            <mat-checkbox
+              [disabled]="isSubmitting"
+              formControlName="rememberMe"
+              color="primary">Remember me</mat-checkbox>
+          </div>
+          <div class="action">
+            <button
+              type="submit"
+              mat-flat-button
+              color="primary"
+              >Log In</button>
+              <button
+                routerLink="/"
+                mat-stroked-button
+                color="primary"
+                >Back to home</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div #footer class="login-footer">
+      <span>Don't have an account? <a routerLink="/signup" replaceUrl="true">Sign up</a></span>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,161 @@
+<ion-header no-border no-shadow>
+  <ion-toolbar>
+    <div slot="start" style="width: 48px"></div>
+    <ion-title class="ion-text-center"></ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onShowSettings()">
+        <ion-icon slot="icon-only" name="settings-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-refresher *ngIf="!isLoading" slot="fixed" (ionRefresh)="doRefresh($event)" class="refresher-custom">
+    <ion-refresher-content >
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="content">
+    <div class="row profile">
+      <div class="col avatar">
+        <ion-avatar>
+          <img
+            [src]="getSafeImageSource(profilePic?.ready ? profilePic?.url : '')"
+            (error)="profilePicErrorHandler($event)">
+        </ion-avatar>
+      </div>
+      <div class="col welcome">
+        <div class="row name">
+          <!-- <h2>Hi, {{ user.firstName }}!</h2> -->
+          <h2>Hi, {{currentProfile?.fullName}}!</h2>
+        </div>
+        <div class="row description">
+          <h2>What can we help you with today?</h2>
+        </div>
+      </div>
+    </div>
+    <!-- TO PAY -->
+    <div class="row dashboard">
+      <div class="col">
+        <ion-card mode="ios">
+          <ion-card-header>
+            <ion-list lines="none">
+              <ion-item class="ion-no-padding">
+                <ion-label >
+                  <h1 class="title"><strong>To Pay</strong></h1>
+                </ion-label>
+                <ion-badge slot="start" color="danger" *ngIf="!isLoading; else elseLoadingBadge">{{totalToPay}}</ion-badge>
+              </ion-item>
+            </ion-list>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list lines="none" *ngIf="!isLoading; else elseLoadingCards">
+              <ion-item *ngIf="toPayPrio; else elseNoToPay" button detail="false" class="ion-no-padding" routerLink="/request/" replaceUrl="true">
+                <ion-label>
+                  <h1 class="item-desc">#{{toPayPrio?.requestNo}}</h1>
+                  <h1 class="item-title">{{toPayPrio?.requestType?.name}}</h1>
+                  <h1 class="item-desc">{{toPayPrio?.dateRequested | date: 'EEEE, MMM dd, yyyy h:mm a'}}</h1>
+                </ion-label>
+              </ion-item>
+              <ng-template #elseNoToPay>
+                <ion-item button detail="false" class="ion-no-padding" [disabled]="true">
+                  <ion-label>
+                    <h1>No To Pay Request this time.</h1>
+                  </ion-label>
+                </ion-item>
+              </ng-template>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+    <!-- TO COMPLETE -->
+    <div class="row dashboard">
+      <div class="col">
+        <ion-card mode="ios">
+          <ion-card-header>
+            <ion-list lines="none">
+              <ion-item class="ion-no-padding">
+                <ion-label >
+                  <h1 class="title"><strong>To Complete</strong></h1>
+                </ion-label>
+                <ion-badge slot="start" color="success" *ngIf="!isLoading; else elseLoadingBadge">{{totalToComplete}}</ion-badge>
+              </ion-item>
+            </ion-list>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list lines="none" *ngIf="!isLoading; else elseLoadingCards">
+              <ion-item *ngIf="toCompletePrio; else elseNoToComplete" button detail="false" class="ion-no-padding" routerLink="/request/" replaceUrl="true">
+                <ion-label>
+                  <h1 class="item-desc">#{{toCompletePrio?.requestNo}}</h1>
+                  <h1 class="item-title">{{toCompletePrio?.requestType?.name}}</h1>
+                  <h1 class="item-desc">{{toCompletePrio?.dateProcessEnd | date: 'EEEE, MMM dd, yyyy h:mm a'}}</h1>
+                </ion-label>
+              </ion-item>
+              <ng-template #elseNoToComplete>
+                <ion-item button detail="false" class="ion-no-padding" [disabled]="true">
+                  <ion-label>
+                    <h1>No To Complete Request this time.</h1>
+                  </ion-label>
+                </ion-item>
+              </ng-template>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+    <!-- PROCESSING -->
+    <div class="row dashboard">
+      <div class="col">
+        <ion-card mode="ios">
+          <ion-card-header>
+            <ion-list lines="none">
+              <ion-item class="ion-no-padding">
+                <ion-label >
+                  <h1 class="title"><strong>Processing</strong></h1>
+                </ion-label>
+                <ion-badge slot="start" color="primary" *ngIf="!isLoading; else elseLoadingBadge">{{totalProcessing}}</ion-badge>
+              </ion-item>
+            </ion-list>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list lines="none" *ngIf="!isLoading; else elseLoadingCards">
+              <ion-item *ngIf="processingPrio; else elseNoProcessing" button detail="false" class="ion-no-padding" routerLink="/request" replaceUrl="true">
+                <ion-label>
+                  <h1 class="item-desc">#{{processingPrio?.requestNo}}</h1>
+                  <h1 class="item-title">{{processingPrio?.requestType?.name}}</h1>
+                  <h1 class="item-desc">{{processingPrio?.dateProcessStarted | date: 'EEEE, MMM dd, yyyy h:mm a'}}</h1>
+                </ion-label>
+              </ion-item>
+              <ng-template #elseNoProcessing>
+                <ion-item button detail="false" class="ion-no-padding" [disabled]="true">
+                  <ion-label>
+                    <h1>No Processing Request this time.</h1>
+                  </ion-label>
+                </ion-item>
+              </ng-template>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ng-template #elseLoadingCards>
+  <ion-list lines="none">
+    <ion-item detail="false" class="ion-no-padding">
+      <ion-label style="display: flex;flex-direction: column; gap: 10px;">
+        <h1>
+          <ion-skeleton-text [animated]="true" style="height: 20px;"></ion-skeleton-text>
+        </h1>
+        <h1>
+          <ion-skeleton-text [animated]="true" style="height: 20px;"></ion-skeleton-text>
+        </h1>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ng-template>
+
+<ng-template #elseLoadingBadge>
+  <ion-skeleton-text [animated]="true" style="height: 20px;width: 40px;"></ion-skeleton-text>
+</ng-template>

@@ -1,0 +1,25 @@
+{
+  "appId": "com.kioskregistrar.mobile",
+  "appName": "NORSU Registrar KIOSK",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "http"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 5000,
+      "launchAutoHide": false
+    },
+    "PushNotifications": {
+      "sound": "notif_alert",
+      "presentationOptions": [
+        "badge",
+        "sound",
+        "alert"
+      ]
+    }
+  },
+  "cordova": {}
+}

@@ -1,0 +1,47 @@
+<ion-header no-border no-shadow>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()" >
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center"><h2 style="margin: 0!important;">Settings</h2></ion-title>
+    <div slot="end" style="width: 48px"></div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content">
+    <div class="row profile">
+      <div class="col avatar">
+        <ion-avatar>
+          <img
+          [src]="getSafeImageSource(profilePicSource?.ready ? profilePicSource?.url : '')"
+          (error)="profilePicErrorHandler($event)"
+          id="profilePicture">
+        </ion-avatar>
+      </div>
+      <div class="col welcome">
+        <div class="row name">
+          <h1>{{ currentProfile.fullName }}</h1>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="display:flex">
+      <ion-list lines="none" class="nav-list">
+        <ion-item (click)="onSettingsMenuClick('profile-settings')">
+          <ion-icon slot="start" name="person-outline"></ion-icon>
+          <ion-label><h1>Profile Settings</h1></ion-label>
+        </ion-item>
+        <ion-item (click)="onSettingsMenuClick('password-and-security')">
+          <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>
+          <ion-label><h1>Password and security</h1></ion-label>
+        </ion-item>
+        <ion-item (click)="signout()">
+          <ion-icon slot="start" name="exit-outline"></ion-icon>
+          <ion-label><h1>Sign Out</h1></ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

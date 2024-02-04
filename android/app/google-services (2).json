@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1008081065195",
+    "project_id": "kioskregistrar",
+    "storage_bucket": "kioskregistrar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008081065195:android:7e46828bac0871d2f59aae",
+        "android_client_info": {
+          "package_name": "com.kioskregistrar.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7u241NljDihO59ZOa4ukJkW77PN0qQ-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

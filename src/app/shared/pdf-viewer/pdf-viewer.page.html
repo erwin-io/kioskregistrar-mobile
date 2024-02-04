@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()" >
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="text-align: center"><h3>{{name}}</h3></ion-title>
+    <div slot="end" style="width: 48px"></div>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ngx-extended-pdf-viewer
+  [showSecondaryToolbarButton]="false"
+  [sidebarVisible]="false"
+  [showSidebarButton]="false"
+  [showRotateButton]="false"
+  [showDownloadButton]="false"
+  [showOpenFileButton]="false"
+  [showPrintButton]="false"
+  [showDrawEditor]="false"
+  [showEditor]="false"
+  [showTextEditor]="false"
+  [showZoomButtons]="false"
+  [src]="url"
+  [useBrowserLocale]="true"></ngx-extended-pdf-viewer>
+</ion-content>

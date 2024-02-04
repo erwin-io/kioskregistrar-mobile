@@ -1,0 +1,103 @@
+<ion-header no-border no-shadow>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()" >
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="text-align: center"><h2>Archived</h2></ion-title>
+    <div slot="end" style="width: 48px"></div>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-refresher *ngIf="!isLoading" slot="fixed" (ionRefresh)="doRefresh($event)" class="refresher-custom">
+    <ion-refresher-content >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="booking-list">
+    <ng-container *ngIf="!isLoading; else elseLoading">
+      <ng-container *ngIf="requestData.length > 0; else elseNoData">
+        <div class="list-data">
+          <ion-card mode="ios" *ngFor="let r of requestData">
+            <ion-card-header>
+              <ion-list lines="none">
+                <ion-item class="ion-no-padding">
+                  <ion-label>
+                    <div style="display: flex;flex-direction: column;">
+                      <ion-badge class="request-status {{r.requestStatus.toLowerCase()}}">{{
+                      r.requestStatus === 'CLOSED' ? 'Closed' : '' ||
+                      r.requestStatus === 'CANCEL' ? 'Cancelled' : '' ||
+                      r.requestStatus === 'REJECTED' ? 'Rejected' : '' ||
+                      r.requestStatus === 'TOCOMPLETE' ? 'To complete' : ''}}</ion-badge>
+                      <h2 class="title" (click)="onOpenDetails(r)">#{{r.requestNo}}</h2>
+                    </div>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label (click)="onOpenDetails(r)">
+                <h2 class="item-title"><strong>{{r?.requestType?.name}}</strong></h2>
+              </ion-label>
+            </ion-card-content>
+            <div class="action" >
+              <div style="display :flex; flex-direction: column;width: 100%;" (click)="onOpenDetails(r)">
+                <div *ngIf="r.requestStatus === 'CLOSED'">
+                  <h5><strong>{{r.dateClosed| date: 'EEE, dd MMM yyyy h:mm a'}}</strong></h5>
+                </div>
+                <div *ngIf="r.requestStatus === 'CANCEL'">
+                  <h5><strong>{{r.dateLastUpdated| date: 'EEE, dd MMM yyyy h:mm a'}}</strong></h5>
+                </div>
+                <div *ngIf="r.requestStatus === 'REJECTED'">
+                  <h5><strong>{{r.dateLastUpdated| date: 'EEE, dd MMM yyyy h:mm a'}}</strong></h5>
+                </div>
+                <div *ngIf="r.requestStatus === 'TOCOMPLETE'">
+                  <h5><strong>{{r.dateProcessEnd| date: 'EEE, dd MMM yyyy h:mm a'}}</strong></h5>
+                </div>
+              </div>
+            </div>
+          </ion-card>
+          <ion-button style="margin: 10px 0;" *ngIf="requestData && requestData.length >= pageSize && requestData.length < total" fill="clear" size="small" expand="full" (click)="loadMore()"><h4>Load more...</h4></ion-button>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <ng-template #elseNoData >
+    <div class="list-none">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <h3>No records yet</h3>
+    </div>
+  </ng-template>
+  <ng-template #elseLoading>
+    <ion-card mode="ios" >
+      <ion-card-header>
+        <ion-list lines="none">
+          <ion-item class="ion-no-padding">
+            <ion-label>
+              <ion-skeleton-text style="height: 25px;width: 100%" [animated]="true"></ion-skeleton-text>
+            </ion-label>
+            <ion-skeleton-text style="height: 25px;width: 20%" [animated]="true"></ion-skeleton-text>
+          </ion-item>
+        </ion-list>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label >
+          <ion-skeleton-text style="height: 30px;width: 100%" [animated]="true"></ion-skeleton-text>
+        </ion-label>
+      </ion-card-content>
+      <div class="action" >
+        <div style="display :flex; flex-direction: column;width: 100%;">
+          <ion-skeleton-text style="height: 20px;width: 100%" [animated]="true"></ion-skeleton-text>
+        </div>
+        <ion-list lines="none">
+          <ion-item button class="ion-no-padding" detail="false">
+            <ion-skeleton-text style="height: 30px;width: 100%" [animated]="true"></ion-skeleton-text>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-card>
+  </ng-template>
+
+</ion-content>

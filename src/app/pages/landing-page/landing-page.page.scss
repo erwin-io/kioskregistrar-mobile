@@ -1,0 +1,57 @@
+.wrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  background: url(../../../assets/img/landing-page.png);
+  backdrop-filter: blur(5px); /* apply the blur */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  &::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backdrop-filter: blur(5px); /* apply the blur */
+    pointer-events: none; /* make the overlay click-through */
+    background-color: rgb(43 58 99 / 64%);
+  }
+  .banner {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #fff;
+    position: relative;
+    z-index: 99;
+    img {
+      display: flex;
+      width: 100%;
+      max-width: 100px;
+      margin-bottom: 50px;
+      box-shadow: 0 0 18px 3px #fff0387d!important;
+      border-radius: 100px!important;
+    }
+    h1 {
+      margin: 0 !important;
+    }
+  }
+  .controls {
+    position: relative;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    ion-button {
+      color: #fff;
+      width: 200px;
+      height: 50px;
+      font-size: 18px;
+    }
+  }
+}

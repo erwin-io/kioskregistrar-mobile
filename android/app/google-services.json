@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "254255626739",
+    "project_id": "tailor-booking-app",
+    "storage_bucket": "tailor-booking-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254255626739:android:924c02f117dd94328f3a86",
+        "android_client_info": {
+          "package_name": "com.kioskregistrar.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254255626739-pnc7pbgos4ln735kefgggnj7imjlvimn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeMdBQ8LNv43HAMvazK391bO6wZkHxV3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254255626739-pnc7pbgos4ln735kefgggnj7imjlvimn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

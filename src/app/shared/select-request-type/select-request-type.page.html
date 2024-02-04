@@ -1,0 +1,93 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()" >
+        <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title style="text-align: center"></ion-title>
+    <div slot="end" style="width: 48px"></div>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="ion-padding">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh()" class="refresher-custom">
+    <ion-refresher-content >
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="search-header">
+    <ion-buttons slot="start">
+      <ion-button (click)="close()" >
+        <ion-icon name="chevron-back" style="font-size: 2.5em!important;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        type="search"
+        #searchKey
+        placeholder="Search Request type"
+      />
+      <mat-icon
+        *ngIf="searchKey.value && searchKey.value !== ''"
+        (click)="searchKey.value = '';search(searchKey.value)"
+        matSuffix>
+        close
+      </mat-icon>
+      <mat-icon
+        (click)="search(searchKey.value)"
+        matSuffix>
+        search
+      </mat-icon>
+    </mat-form-field>
+  </div>
+  <ng-container *ngIf="!isLoading; else elseLoading">
+    <ng-container *ngIf="requestTypeList.length > 0; else elseNoData">
+      <div class="request-type-list">
+        <div class="request-type-item" *ngFor="let item of requestTypeList"
+          (click)="selected && selected?.requestTypeId === item.requestTypeId ? selected = null : selected = item"
+          [ngClass]="{'selected': selected && selected?.requestTypeId === item.requestTypeId}">
+          <h3 class="request-type-name">{{item.name}}</h3>
+          <ion-icon slot="icon-only" name="checkmark-circle"></ion-icon>
+        </div>
+        <ion-button style="margin: 10px 0;" *ngIf="requestTypeList && requestTypeList.length >= pageSize && requestTypeList.length < total" fill="clear" size="small" expand="full" (click)="loadMore()"><h5>Load more...</h5></ion-button>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-template #elseLoading>
+    <div class="request-type-list">
+      <div class="request-type-item" style="column-gap: 10px!important;padding: 10px!important;border-color: #f4f5f8!important;">
+        <h3 class="request-type-name"><ion-skeleton-text style="height: 40px;width: 100%" [animated]="true"></ion-skeleton-text></h3>
+        <ion-skeleton-text style="height: 40px;width: 20%" [animated]="true"></ion-skeleton-text>
+      </div>
+      <div class="request-type-item" style="column-gap: 10px!important;padding: 10px!important;border-color: #f4f5f8!important">
+        <h3 class="request-type-name"><ion-skeleton-text style="height: 40px;width: 100%" [animated]="true"></ion-skeleton-text></h3>
+        <ion-skeleton-text style="height: 40px;width: 20%" [animated]="true"></ion-skeleton-text>
+      </div>
+      <div class="request-type-item" style="column-gap: 10px!important;padding: 10px!important;border-color: #f4f5f8!important">
+        <h3 class="request-type-name"><ion-skeleton-text style="height: 40px;width: 100%" [animated]="true"></ion-skeleton-text></h3>
+        <ion-skeleton-text style="height: 40px;width: 20%" [animated]="true"></ion-skeleton-text>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #elseNoData>
+    <div class="list-none">
+      <ion-icon name="search-outline"></ion-icon>
+      <h3>No records found</h3>
+    </div>
+  </ng-template>
+
+</ion-content>
+
+<ion-footer *ngIf="selected && selected?.requestTypeId">
+  <ion-button
+      mode="md"
+      expand="full"
+      shape="round"
+      size="large"
+      color="primary"
+      (click)="select(selected)">
+      Select
+    </ion-button>
+</ion-footer>

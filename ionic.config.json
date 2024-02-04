@@ -1,0 +1,7 @@
+{
+  "name": "NORSU Registrar KIOSK",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

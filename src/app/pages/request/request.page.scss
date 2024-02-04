@@ -1,0 +1,193 @@
+ion-header::after {
+  background-image: none;
+  }
+  h1,h2,h3,h4,h5,h6 {
+    margin: 0!important;
+  }
+ion-toolbar {
+  // --background: #E0F2F1;
+  }
+::ng-deep .mat-tab-group {
+  height: 100%;
+  display: flex;
+  .mat-tab-labels{
+    justify-content: space-around;
+  }
+  .mat-tab-body-wrapper {
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+  }
+}
+
+::ng-deep ion-badge {
+  &.request-status {
+    box-shadow: none!important;
+    cursor: default!important;
+    &.pending {
+      --background: #FFE0B2!important;
+      --color: #000!important;
+    }
+    &.topay {
+      --background: #C8E6C9;
+      --color: #000!important;
+    }
+    &.processing {
+      --background: #C8E6C9;
+      --color: #000!important;
+    }
+    &.tocomplete {
+      --background: #90CAF9;
+      --color: #000!important;
+    }
+  }
+}
+.booking-list {
+  .list-data {
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px!important;
+    padding-bottom: 20px!important;
+    ion-card {
+      margin: 0!important;
+    }
+  }
+  .list-none {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center!important;
+    justify-content: center!important;
+  }
+}
+.sched-controls-bottom {
+  z-index: 1000;
+  position: relative;
+  display: block;
+  width: 100%;
+  background: #ffffff;
+  padding: 5px 10px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  ion-button {
+  }
+}
+
+.list-title {
+  margin: 10px 25px!important;
+  display: flex;
+}
+:host {
+  // --super-tabs-toolbar-background: #E0F2F1;
+  --super-tabs-toolbar-background: #fff;
+  --st-indicator-color: var(--ion-color-tertiary);
+  --st-base-color-active: var(--ion-color-tertiary);
+  --st-base-color-inactive: var(--ion-color-dark-tint)!important;
+}
+ion-icon {
+  font-size: 2em!important;
+}
+
+
+::ng-deep ion-card {
+  ion-list {
+    ion-thumbnail {
+      width: 40px!important;
+      img {
+        object-fit: contain!important;
+      }
+    }
+  }
+  ion-label {
+    text-overflow: unset;
+    white-space: unset;
+    overflow: unset;
+    h1,h2,h3,h4,h5,span,p {
+      display: -webkit-box;
+      max-width: 100%;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .title {
+      font-size: 1.5em;
+      opacity: 0.8;
+    }
+    .item-title {
+      opacity: 0.8;
+      font-weight: 800;
+      font-size: 1.5em;
+      color: #003085;
+    }
+    .item-desc {
+      opacity: 0.8;
+    }
+  }
+  ion-badge {
+    line-height: 1;
+    font-size: 1.2em;
+  }
+  ::ng-deep ion-card-header {
+    ion-item {
+      ion-label {
+        * {
+          margin: 0 !important;
+        }
+      }
+    }
+  }
+  ion-card-content {
+    ion-item {
+      ion-label {
+        * {
+          margin: 0 !important;
+        }
+        margin: 8px!important;
+      }
+    }
+  }
+  .action {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+::ng-deep {
+  ion-modal {
+    h1,h2,h3,h4,h5,span,p,label {
+      margin: 0;
+    }
+    .success-modal-content {
+      display: flex;
+      min-height: 100%;
+      min-width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-content: space-between;
+      align-items: center;
+      row-gap: 20px!important;
+      overflow: hidden!important;
+      padding: 30px!important;
+      ion-icon {
+        font-size: 8rem!important;
+      }
+      .title {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        h1 {
+          font-size: 1.8rem;
+        }
+      }
+      .desc {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+      }
+      .action {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}

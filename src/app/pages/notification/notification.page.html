@@ -1,0 +1,58 @@
+
+<ion-header no-border no-shadow mode="md">
+  <ion-toolbar mode="md">
+    <ion-title class="ion-text-center"><h2 style="margin: 0!important;">Notifications</h2></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content mode="md">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh()" class="refresher-custom">
+    <ion-refresher-content >
+    </ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!isLoading; else elseLoading">
+    <ion-list *ngIf="data.length > 0; else elseNoData" class="notifications" >
+      <ion-item [color]="item.isRead ? '':'light'" *ngFor="let item of data"  button [ngClass]="{'un-read': item.isRead}" (click)="onNotificationClick(item)">
+        <ion-icon name="{{item.icon}}-outline" color="{{item.iconColor}}" slot="start"></ion-icon>
+        <ion-label>
+          <div *ngIf="item.isRead; else elseUnRead">
+            <h1 class="title">{{item.title}}</h1>
+            <h2 class="desc">{{item.description}}</h2>
+            <h2 class="desc">{{item.date | timeAgo}}</h2>
+          </div>
+          <ng-template #elseUnRead >
+            <div>
+              <h1 class="title"><strong>{{item.title}}</strong></h1>
+              <h2 class="desc"><strong>{{item.description}}</strong></h2>
+              <h2 style="color:#3880ff" class="desc"><strong>{{item.date | timeAgo}}</strong></h2>
+            </div>
+          </ng-template>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-button *ngIf="data && data.length >= limit && data.length < totalItems" fill="clear" size="small" expand="full" (click)="loadMore()">
+      <h5>Load more...</h5>
+    </ion-button>
+  </div>
+  <ng-template #elseLoading >
+    <ion-list>
+      <ion-item lines="full">
+        <h1 slot="start" style="width: 40px;height:70px; margin-bottom: 0!important; margin-right: 10px!important;"><ion-skeleton-text [animated]="true"></ion-skeleton-text></h1>
+        <ion-label>
+          <div style="display: flex;flex-direction: column;row-gap: 10px;">
+            <h1 style="width: 100%;height: 30px;margin:0!important"><ion-skeleton-text [animated]="true"></ion-skeleton-text></h1>
+            <h1 style="width: 100%;height: 20px;margin:0!important"><ion-skeleton-text [animated]="true"></ion-skeleton-text></h1>
+            <h1 style="width: 100%;height: 20px;margin:0!important;margin-bottom: 10px!important"><ion-skeleton-text [animated]="true"></ion-skeleton-text></h1>
+            <h1 style="width: 40%;height: 20px;margin:0!important"><ion-skeleton-text [animated]="true"></ion-skeleton-text></h1>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+  <ng-template #elseNoData >
+    <div class="no-records">
+      <ion-icon name="notifications-off-outline" style="font-size: 3rem!important;"></ion-icon>
+      <h1 class="text">No notifications to show</h1>
+    </div>
+  </ng-template>
+</ion-content>

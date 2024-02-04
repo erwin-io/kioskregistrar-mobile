@@ -1,0 +1,57 @@
+ion-header::after {
+  background-image: none;
+}
+
+
+ ion-content {
+  --offset-bottom: -20px!important;
+  ion-item {
+    background: #cccc!important;
+    button {
+      background: #cccc!important;
+    }
+  }
+
+  .notifications {
+    ion-item {
+      ion-icon {
+        font-size: 3rem;
+        margin-right: 10px!important;
+      }
+    }
+  }
+
+  ::ng-deep ion-item {
+   .un-read {
+     .title {
+       font-weight: 800!important;
+     }
+    }
+  }
+  ion-label {
+    text-overflow: unset;
+    white-space: unset;
+    overflow: unset;
+    .title {
+      -webkit-line-clamp: 2;
+    }
+    .desc {
+      -webkit-line-clamp: 4;
+    }
+    h1, h3, p {
+      margin: 0 !important;
+      display: -webkit-box;
+      max-width: 100%;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+  div {
+    height: 100%!important;
+    .no-records {
+      ion-icon {
+        font-size: 2rem;
+      }
+     }
+  }
+ }
